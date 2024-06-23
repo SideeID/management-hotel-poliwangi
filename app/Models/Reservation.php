@@ -33,8 +33,13 @@ class Reservation extends Model
         return $this->belongsTo(Guest::class, 'guest_id');
     }
 
-    public function rate_plan()
+    public function ratePlan()
     {
         return $this->belongsTo(RatePlan::class, 'rate_plan_id');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'reservations_id');
     }
 }
