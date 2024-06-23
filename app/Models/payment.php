@@ -10,10 +10,11 @@ class payment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'payemnt_id',
         'booking_id',
-        '',
-        '',
-        '',
     ];
+
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class, 'booking_id');
+    }
 }
