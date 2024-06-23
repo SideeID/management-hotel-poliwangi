@@ -7,6 +7,7 @@ use App\Models\RatePlan;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
     return view('dashboard', ['title' => 'Dashboard']);
@@ -71,12 +72,10 @@ Route::get('/sales/rate_plans/create', function () {
 });
 
 // Finance
-Route::get('/document_invoice', function () {
-    return view('finance/invoice/index', ['title' => 'Invoice']);
-});
-
-Route::get('/document_invoice/show', function () {
-    return view('finance/document/show_invoice', ['title' => 'Invoice']);
+Route::prefix('finance')->group(function () {
+    Route::get('/invoice', [PaymentController::class, 'showInvoice'])->name('invoice.index');
+    Route::get('/invoice/{guestId}/detail', [PaymentController::class, 'showDetailedInvoice'])->name('invoice.show');
+    Route::get('/invoice/{guestId}/download', [PaymentController::class, 'downloadInvoice'])->name('invoice.download');
 });
 
 Route::get('/document_folios', function () {
